@@ -102,7 +102,7 @@ ors:
 #      maximum_locations: 5000
 #  ##### ORS engine settings #####
   engine:
-    source_file: ors-api/src/test/files/heidelberg.osm.gz
+    source_file: /home/ors/files/example-heidelberg.osm.gz
 #    init_threads: 1
 #    preparation_mode: false
 #    graphs_root_path: ./graphs
@@ -224,10 +224,11 @@ ors:
 #          WaySurfaceType:
 #          HillIndex:
 #          TrailDifficulty:
-#      bike-mountain:
-#        profile: cycling-mountain
+      bike-mountain:
+        enabled: true
+        profile: cycling-mountain
 #        encoder_options:
-#          consider_elevation: true
+#          consider_elevation: false
 #          turn_costs: true
 #          block_fords: false
 #        ext_storages:
@@ -235,10 +236,11 @@ ors:
 #          WaySurfaceType:
 #          HillIndex:
 #          TrailDifficulty:
-#      bike-road:
-#        profile: cycling-road
+      bike-road:
+        enabled: true
+        profile: cycling-road
 #        encoder_options:
-#          consider_elevation: true
+#          consider_elevation: false
 #          turn_costs: true
 #          block_fords: false
 #        ext_storages:
@@ -246,10 +248,11 @@ ors:
 #          WaySurfaceType:
 #          HillIndex:
 #          TrailDifficulty:
-#      bike-electric:
-#        profile: cycling-electric
+      bike-electric:
+        enabled: true
+        profile: cycling-electric
 #        encoder_options:
-#          consider_elevation: true
+#          consider_elevation: false
 #          turn_costs: true
 #          block_fords: false
 #        ext_storages:
