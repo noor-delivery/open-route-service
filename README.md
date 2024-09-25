@@ -3,6 +3,18 @@
 This fork is customized version of openrouteservice for noor. 
 Features, custom authentication and osm files for tashkent.
 
+## Instructions for setup
+* Clone the repository
+* Run `docker-compose up -d` to start the service
+* Put the tashkent.osm.pbf file in ors-docker/files folder 
+* Do compose down
+* Do compose up
+
+## Additional source
+* You can take the osm files from recommended sources.
+* [Source](https://download.bbbike.org/osm/) for current tashkent osm file.
+* Since we are using docker setup, you can change configuration directly from compose file.
+
 [![Docker Nightly Build Status](https://img.shields.io/github/actions/workflow/status/GIScience/openrouteservice/docker-nightly-image.yml?style=flat&label=Docker%20Nightly&link=https%3A%2F%2Fhub.docker.com%2Fr%2Fheigit%2Fopenrouteservice%2Ftags)](https://hub.docker.com/r/heigit/openrouteservice/tags)
 [![Docker Version Status](https://img.shields.io/github/actions/workflow/status/GIScience/openrouteservice/publish-tagged-release.yml?style=flat&label=Docker%20Latest&link=https%3A%2F%2Fhub.docker.com%2Fr%2Fheigit%2Fopenrouteservice%2Ftags)](https://hub.docker.com/r/heigit/openrouteservice/tags)
 [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=GIScience_openrouteservice&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=GIScience_openrouteservice)

@@ -1,3 +1,7 @@
+# Docker Compose file for the openrouteservice (ORS) application
+# Documentation and examples can be found on https://giscience.github.io/openrouteservice/run-instance/running-with-docker
+version: '3.8'
+
 services:
   # ----------------- ORS application configuration ------------------- #
   ors-app:
@@ -76,14 +80,12 @@ services:
   auth-proxy:
     build:
       dockerfile: ./auth/Dockerfile
-      target: local
+      target: production
     container_name: ors-auth-proxy
     volumes:
-      - ./auth:/usr/src/app
+      - ./auth/logger:/usr/bin/app/logger
     ports:
-      - "80:80"
-    env_file:
-      - ./auth/.env
+      - "443:443"
 
 # ----------------- Docker Volumes configuration ------------------- #
 # Define the Docker managed volumes for the ORS application. For more info on Docker Volumes see https://docs.docker.com/compose/compose-file/07-volumes/
