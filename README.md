@@ -7,6 +7,7 @@ Features, custom authentication and osm files for tashkent.
 * Clone the repository
 * Run `docker-compose up -d` to start the service
 * Put the tashkent.osm.pbf file in ors-docker/files folder 
+* Move .env.example to .env and change the values in auth folder
 * Do compose down
 * Do compose up
 
