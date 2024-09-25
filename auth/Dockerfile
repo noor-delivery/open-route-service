@@ -21,7 +21,7 @@ RUN go mod download
 RUN mkdir -p /usr/src/app/tmp
 
 # Build server executable
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /usr/src/app/tmp/server_process ./auth/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -o /usr/src/app/tmp/server_process ./main.go
 
 FROM alpine:3.14 AS production
 

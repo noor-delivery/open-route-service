@@ -86,6 +86,8 @@ services:
       - ./auth/logger:/usr/bin/app/logger
     ports:
       - "443:443"
+    env_file:
+      - ./auth/.env
 
 # ----------------- Docker Volumes configuration ------------------- #
 # Define the Docker managed volumes for the ORS application. For more info on Docker Volumes see https://docs.docker.com/compose/compose-file/07-volumes/
