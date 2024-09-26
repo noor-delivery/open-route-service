@@ -13,6 +13,16 @@ import (
 	"time"
 )
 
+func In[T comparable](item T, items ...T) bool {
+	for _, i := range items {
+		if i == item {
+			return true
+		}
+	}
+
+	return false
+}
+
 // region Claims
 
 type UserJwtClaims struct {
@@ -62,7 +72,7 @@ func validateJWT(next http.Handler) http.Handler {
 
 		// Extract claims and validate role
 		claims, ok := token.Claims.(*MyCustomClaims)
-		if !ok || claims.Role != "COURIER" {
+		if !ok || !In(claims.Role, "ADMIN", "USER", "COURIER", "MANAGER", "CLIENT") {
 			http.Error(w, "Forbidden", http.StatusForbidden)
 			return
 		}
