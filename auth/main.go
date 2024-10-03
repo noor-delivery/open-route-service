@@ -72,7 +72,7 @@ func validateJWT(next http.Handler) http.Handler {
 
 		// Extract claims and validate role
 		claims, ok := token.Claims.(*MyCustomClaims)
-		if !ok || !In(claims.Role, "ADMIN", "USER", "COURIER", "MANAGER", "CLIENT") {
+		if !ok || !In(claims.Role, "ADMIN", "USER", "COURIER", "MANAGER", "CLIENT", "VENDOR") {
 			http.Error(w, "Forbidden", http.StatusForbidden)
 			return
 		}
