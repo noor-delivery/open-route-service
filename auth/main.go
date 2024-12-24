@@ -43,6 +43,7 @@ type MyCustomClaims struct {
 var jwtSecret []byte
 var targetDomain string
 var logs logger.LoggerInterface
+var secret string
 
 // region Middleware
 
@@ -50,8 +51,14 @@ var logs logger.LoggerInterface
 func validateJWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		authHeader := r.Header.Get("Authorization")
-		if authHeader == "" {
+		authSecret := r.Header.Get("X-Auth")
+		if authHeader == "" && authSecret == "" {
 			http.Error(w, "Missing token", http.StatusUnauthorized)
+			return
+		}
+
+		if authSecret != "" && secret == authSecret {
+			next.ServeHTTP(w, r)
 			return
 		}
 
@@ -132,6 +139,11 @@ func main() {
 	// Initialize things
 	jwtSecret = []byte(os.Getenv("JWT_SIGN_KEY"))
 	targetDomain = os.Getenv("TARGET_DOMAIN")
+	secret = os.Getenv("AUTH_SECRET")
+	if secret == "" {
+		log.Fatal("secret variable is not set!")
+	}
+
 	logs = logger.NewLogger()
 	logs.StartListener()
 
