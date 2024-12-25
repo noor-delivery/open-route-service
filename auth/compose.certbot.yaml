@@ -1,0 +1,53 @@
+services:
+  nginx:
+    image: nginx:latest
+    container_name: nginx
+    ports:
+      - 80:80 # Nginx needs at least port 80 to be free at the time of running this
+    volumes:
+      # preconfigured nginx configuration for running cerbot
+      - ./nginx/nginx.certbot.conf:/etc/nginx/nginx.conf:ro
+
+      # cerbot ssl certificate files
+      - ./nginx/letsencrypt:/etc/letsencrypt
+
+      # certbot challenge files
+      - ./nginx/challenge:/usr/share/nginx/html/challenge
+
+    depends_on:
+      - certbot
+    networks:
+      - delivery-network
+
+  certbot:
+    image: certbot/certbot
+    container_name: certbot
+    volumes:
+      - ./nginx/letsencrypt:/etc/letsencrypt
+      - ./nginx/nginx.certbot.conf:/etc/nginx/nginx.conf:ro
+      - ./nginx/challenge:/var/challenge
+    entrypoint: "tail -f /dev/null"
+    # Once you run docker compose -f compose.certbot.yaml up -d --build command, exec into container and run the following command against the domains you need ssl for
+    #
+    # ------ Prod commands ------
+    #
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d back.noor.uz
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d cpanel.noor.uz
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d merchant.noor.uz
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d noor.uz
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d locker.noor.uz
+    #
+    # ------ Dev commands ------
+    #
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d tback.noor.uz
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d tcpanel.noor.uz
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d tmerchant.noor.uz
+    # certbot certonly --webroot --webroot-path=/var/challenge --email komilovboburweb@gmail.com --agree-tos --no-eff-email -d t.noor.uz
+    #
+    # After running the commands you can find ssl files under docker/nginx/letsencrypt folder
+    networks:
+      - delivery-network
+
+networks:
+  delivery-network:
+    external: true
