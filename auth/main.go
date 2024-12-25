@@ -157,7 +157,7 @@ func main() {
 
 		// Start the server with SSL
 		log.Println("Proxy server running on port 443 with SSL")
-		if err := http.ListenAndServeTLS(":443", sslCertPath, sslKeyPath, nil); err != nil {
+		if err := http.ListenAndServeTLS(":443", sslKeyPath, sslCertPath, nil); err != nil {
 			log.Fatal(err)
 		}
 		return
