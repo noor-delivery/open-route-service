@@ -34,8 +34,8 @@ RUN apk add --no-cache bash
 RUN mkdir -p /usr/bin/app
 
 COPY auth/.env /usr/bin/app/.env
-COPY auth/server.key /usr/bin/app/server.key
-COPY auth/server.crt /usr/bin/app/server.crt
+COPY auth/nginx/letsencrypt/live/route.noor.uz/fullchain.pem /usr/bin/app/fullchain.pem
+COPY auth/nginx/letsencrypt/live/route.noor.uz/privkey.pem /usr/bin/app/privkey.pem
 
 # Copy server executable
 COPY --from=builder /usr/src/app/tmp/server_process /usr/bin/app/server_process
