@@ -96,6 +96,12 @@ func validateJWT(next http.Handler) http.Handler {
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	targetURL := targetDomain + r.URL.Path
 
+	// Allow CORS for all origins (or specify a specific origin)
+	w.Header().Set("Access-Control-Allow-Origin", "*")                                // Allow all origins
+	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS") // Allow specific methods
+	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")     // Allow specific headers
+	w.Header().Set("Access-Control-Allow-Credentials", "true")                        // Allow credentials (cookies, authorization)
+
 	// Forward the request
 	req, err := http.NewRequest(r.Method, targetURL, r.Body)
 	if err != nil {
