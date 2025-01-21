@@ -96,12 +96,6 @@ func validateJWT(next http.Handler) http.Handler {
 func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	targetURL := targetDomain + r.URL.Path
 
-	// Allow CORS for all origins (or specify a specific origin)
-	w.Header().Set("Access-Control-Allow-Origin", "*")                                // Allow all origins
-	w.Header().Set("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS") // Allow specific methods
-	w.Header().Set("Access-Control-Allow-Headers", "Content-Type, Authorization")     // Allow specific headers
-	w.Header().Set("Access-Control-Allow-Credentials", "true")                        // Allow credentials (cookies, authorization)
-
 	// Forward the request
 	req, err := http.NewRequest(r.Method, targetURL, r.Body)
 	if err != nil {
@@ -132,6 +126,13 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 			w.Header().Add(key, value)
 		}
 	}
+
+	// Allow CORS for all origins (or specify a specific origin)
+	w.Header().Set("Access-Control-Allow-Origin", "*")                                                              // Allow all origins
+	w.Header().Set("Access-Control-Allow-Methods", "GET,POST,HEAD,PUT,DELETE,PATCH,OPTIONS")                        // Allow specific methods
+	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization") // Allow specific headers
+	w.Header().Set("Access-Control-Allow-Credentials", "true")                                                      // Allow credentials (cookies, authorization)
+
 	w.WriteHeader(resp.StatusCode)
 	if _, err = io.Copy(w, resp.Body); err != nil {
 		http.Error(w, "Error proxying response", http.StatusInternalServerError)
