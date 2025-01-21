@@ -50,6 +50,11 @@ var secret string
 // Middleware to validate JWT token
 func validateJWT(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+		if r.Method == http.MethodOptions {
+			next.ServeHTTP(w, r)
+			return
+		}
+
 		authHeader := r.Header.Get("Authorization")
 		authSecret := r.Header.Get("X-Auth")
 		if authHeader == "" && authSecret == "" {
