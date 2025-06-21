@@ -85,7 +85,7 @@ services:
     volumes:
       - ./auth/logger:/usr/bin/app/logger
     ports:
-      - "443:443"
+      - "80:80"
     env_file:
       - ./auth/.env
 

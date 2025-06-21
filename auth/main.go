@@ -155,19 +155,6 @@ func main() {
 	// Define the proxy route
 	http.Handle("/", validateJWT(http.HandlerFunc(proxyHandler)))
 
-	if os.Getenv("APP_ENV") == "PROD" {
-		// Get ssl file paths
-		sslKeyPath := os.Getenv("SSL_KEY_PATH")
-		sslCertPath := os.Getenv("SSL_CERT_PATH")
-
-		// Start the server with SSL
-		log.Println("Proxy server running on port 443 with SSL")
-		if err := http.ListenAndServeTLS(":443", sslKeyPath, sslCertPath, nil); err != nil {
-			log.Fatal(err)
-		}
-		return
-	}
-
 	// Start the server without SSL
 	log.Println("Proxy server running on port 80")
 	log.Fatal(http.ListenAndServe(":80", nil))
