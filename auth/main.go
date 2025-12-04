@@ -131,6 +131,7 @@ func proxyHandler(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept, Authorization, X-Auth") // Allow specific headers
 	w.Header().Set("Access-Control-Allow-Credentials", "true")                                                      // Allow credentials (cookies, authorization)
 
+	
 	w.WriteHeader(resp.StatusCode)
 	if _, err = io.Copy(w, resp.Body); err != nil {
 		http.Error(w, "Error proxying response", http.StatusInternalServerError)
